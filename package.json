@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon ."
+    "dev": "nodemon .",
+    "lint": "eslint . --fix"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,11 @@
     "mercurius": "^7.6.1"
   },
   "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
     "nodemon": "^2.0.7",
     "prisma": "^2.22.1"
   }
