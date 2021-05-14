@@ -1,11 +1,14 @@
 const Fastify = require('fastify')
 const mercurius = require('mercurius')
+const { dbConection } = require('../database/config')
 const graphql = require('../graphql/graphql')
 
 class Server {
   constructor() {
     this.app = Fastify()
     this.port = process.env.port || 3000
+
+    dbConection()
   }
 
   register() {

@@ -1,22 +1,15 @@
-const { dbConection, prisma } = require('../database/config')
+const { prisma } = require('../database/config')
+const { makeExecutableSchema } = require('@graphql-tools/schema')
+const typeDefs = require('../graphql/typesDefs')
+const resolvers = require('../graphql/resolvers')
 
-dbConection()
-
-const schema = `
-type Query {
-  hola: String
-}
-`
-
-const resolvers = {
-  Query: {
-    hola: async () => 'Hello world fastity and graphql',
-  },
-}
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+})
 
 module.exports = {
   schema,
-  resolvers,
   graphiql: 'playground',
   playgroundHeaders(window) {
     return {
