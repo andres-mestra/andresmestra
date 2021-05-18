@@ -1,0 +1,41 @@
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  jobTitle: String
+  role: Role!
+  createdAt: String
+}
+
+enum Role {
+  USER
+  EDITOR
+  ADMIN
+}
+
+input UserFindInput {
+  id: Int
+  email: String
+}
+
+type Query {
+  findUser(where: UserFindInput!): User
+  allUsers: [User]
+}
+
+type UserRes {
+  user: User
+  token: String
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  password: String!
+  jobTitle: String!
+  role: Role
+}
+
+type Mutation {
+  createUser(input: UserInput): UserRes
+}

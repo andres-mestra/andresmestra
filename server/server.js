@@ -6,7 +6,7 @@ const graphql = require('../graphql/graphql')
 class Server {
   constructor() {
     this.app = Fastify()
-    this.port = process.env.port || 3000
+    this.port = process.env.PORT || 3000
 
     dbConection()
   }

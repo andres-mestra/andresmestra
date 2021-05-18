@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node .",
-    "dev": "nodemon .",
+    "dev": "nodemon index.js  -e js,graphql",
     "lint": "eslint . --fix"
   },
   "keywords": [],
@@ -16,8 +16,10 @@
     "@graphql-tools/merge": "^6.2.14",
     "@graphql-tools/schema": "^7.1.5",
     "@prisma/client": "^2.22.1",
+    "argon2": "^0.27.2",
     "dotenv": "^9.0.2",
     "fastify": "^3.15.1",
+    "jsonwebtoken": "^8.5.1",
     "mercurius": "^7.6.1"
   },
   "devDependencies": {

@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client')
 
 const prisma = new PrismaClient({
   log: ['query', 'info'],
+  errorFormat: 'minimal',
 })
 
 const dbConection = async () => {

@@ -16,4 +16,9 @@ module.exports = {
       authorization: `bearer ${window.sessionStorage.getItem('token')}`,
     }
   },
+  context: (request, reply) => {
+    return {
+      db: prisma,
+    }
+  },
 }
