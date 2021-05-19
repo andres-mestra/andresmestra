@@ -1,5 +1,6 @@
 const argon2d = require('argon2')
 const { generarJWT } = require('../helpers/generateJWT')
+const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
   Query: {
@@ -25,7 +26,12 @@ module.exports = {
       }
     },
     allUsers: async (_, args, { db }, inf) => {
-      const users = await db.user.findMany()
+      const select = selectNodes(inf)
+
+      const users = await db.user.findMany({
+        ...select,
+      })
+
       return users
     },
   },
