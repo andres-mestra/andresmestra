@@ -5,6 +5,7 @@ type User {
   jobTitle: String
   role: Role!
   createdAt: String
+  posts: [Post!]
 }
 
 enum Role {
@@ -32,10 +33,20 @@ input UserInput {
   username: String!
   email: String!
   password: String!
-  jobTitle: String!
+  jobTitle: String
+  role: Role
+}
+
+input UserUpdateInput {
+  username: String
+  email: String
+  password: String
+  jobTitle: String
   role: Role
 }
 
 type Mutation {
   createUser(input: UserInput): UserRes
+  updateUser(id: Int, input: UserUpdateInput): User
+  deleteUser(id: Int): Boolean
 }

@@ -4,7 +4,7 @@ const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
   Query: {
-    findUser: async (_, { where }, { db }) => {
+    findUser: async (_, { where }, { db }, inf) => {
       try {
         const user = await db.user.findFirst({
           where: {
@@ -17,6 +17,7 @@ module.exports = {
               },
             ],
           },
+          ...selectNodes(inf),
         })
 
         return user
@@ -26,10 +27,8 @@ module.exports = {
       }
     },
     allUsers: async (_, args, { db }, inf) => {
-      const select = selectNodes(inf)
-
       const users = await db.user.findMany({
-        ...select,
+        ...selectNodes(inf),
       })
 
       return users
@@ -54,6 +53,37 @@ module.exports = {
           user: newUser,
           token,
         }
+      } catch (error) {
+        console.error(error)
+        throw error
+      }
+    },
+    updateUser: async (_, { id, input }, { db }, inf) => {
+      try {
+        if (input?.password) {
+          //hash password
+          const { password } = input
+          input.password = await argon2d.hash(password)
+        }
+
+        const user = await db.user.update({
+          where: { id },
+          data: { ...input },
+          ...selectNodes(inf),
+        })
+
+        return user
+      } catch (error) {
+        console.error(error)
+        throw error
+      }
+    },
+    deleteUser: async (_, { id }, { db }) => {
+      try {
+        //returns record erased
+        await db.user.delete({ where: { id } })
+
+        return true
       } catch (error) {
         console.error(error)
         throw error
