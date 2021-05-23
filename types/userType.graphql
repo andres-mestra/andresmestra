@@ -3,6 +3,7 @@ type User {
   username: String!
   email: String!
   jobTitle: String
+  slug: String!
   role: Role!
   createdAt: String
   posts: [Post!]
@@ -34,6 +35,7 @@ input UserInput {
   email: String!
   password: String!
   jobTitle: String
+  slug: String!
   role: Role
 }
 
@@ -47,6 +49,6 @@ input UserUpdateInput {
 
 type Mutation {
   createUser(input: UserInput): UserRes
-  updateUser(id: Int, input: UserUpdateInput): User
-  deleteUser(id: Int): Boolean
+  updateUser(id: Int!, input: UserUpdateInput!): User
+  deleteUser(id: Int!): Boolean
 }

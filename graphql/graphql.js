@@ -18,6 +18,7 @@ module.exports = {
   },
   context: (request, reply) => {
     return {
+      userId: 1,
       db: prisma,
     }
   },

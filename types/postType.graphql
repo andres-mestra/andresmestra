@@ -3,9 +3,36 @@ type Post {
   title: String!
   content: String!
   author: User
-  authorId: ID!
+  authorId: ID
   createdAt: String
   updatedAt: String
   published: Boolean
+  slug: String!
+}
+
+type Query {
+  findPost(id: Int!): Post
+  allPosts: [Post]
+}
+
+input PostInput {
+  title: String!
+  content: String!
+  authorId: Int
+  slug: String!
+  published: Boolean
+}
+
+input PostUpdateInput {
+  title: String
+  content: String
+  authorId: Int
+  published: Boolean
   slug: String
+}
+
+type Mutation {
+  createPost(input: PostInput): Post
+  updatePost(id: Int!, input: PostUpdateInput!): Post
+  deletePost(id: Int!): Boolean
 }
