@@ -18,6 +18,7 @@ module.exports = {
   },
   context: (request, reply) => {
     return {
+      //TODO: obtener el usuario del token
       userId: 1,
       db: prisma,
     }

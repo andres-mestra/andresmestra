@@ -21,14 +21,21 @@ module.exports = {
   Mutation: {
     createPost: async (_, { input }, { db, userId }, inf) => {
       try {
-        if (!input?.authorId) {
-          input.authorId = userId
+        let data = { ...input }
+        delete data?.authorId
+        data = {
+          ...data,
+          author: { connect: { id: input.authorId ?? userId } },
+        }
+
+        if (input?.categories) {
+          data = { ...data, categories: { connect: input.categories } }
         }
 
         const newPost = await db.post.create({
-          data: { ...input },
+          data,
+          ...selectNodes(inf),
         })
-
         return newPost
       } catch (error) {
         console.error(error)
@@ -37,6 +44,7 @@ module.exports = {
     },
     updatePost: async (_, { id, input }, { db, userId }, inf) => {
       try {
+        //TODO: user el metodo 'set' para actualizar categories
         const post = await db.post.update({
           where: { id },
           data: { ...input },

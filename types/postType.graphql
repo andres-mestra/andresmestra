@@ -3,16 +3,21 @@ type Post {
   title: String!
   content: String!
   author: User
-  authorId: ID
+  authorId: Int
   createdAt: String
   updatedAt: String
   published: Boolean
   slug: String!
+  categories: [Category!]
 }
 
 type Query {
   findPost(id: Int!): Post
   allPosts: [Post]
+}
+
+input PostSetCategoriesInput {
+  id: Int!
 }
 
 input PostInput {
@@ -21,6 +26,7 @@ input PostInput {
   authorId: Int
   slug: String!
   published: Boolean
+  categories: [PostSetCategoriesInput!]
 }
 
 input PostUpdateInput {

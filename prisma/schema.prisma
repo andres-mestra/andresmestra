@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -22,30 +19,28 @@ model User {
   posts     Post[]
 }
 
-enum Role {
-  USER
-  EDITOR
-  ADMIN
-}
-
 model Post {
   id         Int        @id @default(autoincrement())
   title      String     @db.VarChar(255)
   content    String
   authorId   Int?
-  author     User?      @relation(fields: [authorId], references: [id])
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   published  Boolean    @default(false)
-  categories Category[]
   slug       String     @unique
+  author     User?      @relation(fields: [authorId], references: [id])
+  categories Category[]
 }
 
 model Category {
   id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(50)
+  name  String @unique @db.VarChar(50)
   slug  String @unique
   posts Post[]
+}
 
-  @@unique([name])
+enum Role {
+  USER
+  EDITOR
+  ADMIN
 }

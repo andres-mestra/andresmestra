@@ -1,0 +1,33 @@
+type Category {
+  id: Int!
+  name: String!
+  slug: String!
+  posts: [Post]
+}
+
+input CategoryFindInput {
+  id: Int
+  name: Int
+}
+
+type Query {
+  findCategory(where: CategoryFindInput!): Category
+  allCategories: [Category]
+}
+
+input CategoryInput {
+  name: String!
+  slug: String!
+}
+
+input CategoryUpdateInput {
+  name: String
+  slug: String
+}
+
+type Mutation {
+  createCategory(input: CategoryInput!): Category
+  updateCategory(id: Int!, input: CategoryUpdateInput!): Category
+  deleteCategory(id: Int!): Boolean
+  upsertCategory(input: CategoryInput!): Category
+}
