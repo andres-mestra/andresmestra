@@ -35,6 +35,7 @@ input PostUpdateInput {
   authorId: Int
   published: Boolean
   slug: String
+  categories: [PostSetCategoriesInput!]
 }
 
 type Mutation {

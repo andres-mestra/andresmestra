@@ -44,7 +44,10 @@ module.exports = {
     },
     updatePost: async (_, { id, input }, { db, userId }, inf) => {
       try {
-        //TODO: user el metodo 'set' para actualizar categories
+        if (input?.categories) {
+          input = { ...input, categories: { set: input.categories } }
+        }
+
         const post = await db.post.update({
           where: { id },
           data: { ...input },
