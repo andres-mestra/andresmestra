@@ -19,13 +19,13 @@ module.exports = {
     },
   },
   Mutation: {
-    createPost: async (_, { input }, { db, userId }, inf) => {
+    createPost: async (_, { input }, { db, user }, inf) => {
       try {
         let data = { ...input }
         delete data?.authorId
         data = {
           ...data,
-          author: { connect: { id: input.authorId ?? userId } },
+          author: { connect: { id: input.authorId ?? user.id } },
         }
 
         if (input?.categories) {
@@ -42,7 +42,7 @@ module.exports = {
         throw error
       }
     },
-    updatePost: async (_, { id, input }, { db, userId }, inf) => {
+    updatePost: async (_, { id, input }, { db }, inf) => {
       try {
         if (input?.categories) {
           input = { ...input, categories: { set: input.categories } }

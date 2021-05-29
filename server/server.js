@@ -12,6 +12,7 @@ class Server {
   }
 
   register() {
+    // prettier-ignore
     this.app.register(mercurius, graphql)
   }
 

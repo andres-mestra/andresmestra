@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken')
 
-const generarJWT = (id) => {
+const generarJWT = ({ id, role, username }) => {
   return new Promise((resolve, reject) => {
-    const payload = { id }
+    const payload = { id, role, username }
 
     jwt.sign(
       payload,
-      process.env.SECRET_JWT_SEED,
+      process.env.JWT_SECRET,
       {
-        expiresIn: '24h',
+        expiresIn: '15d',
       },
       (error, token) => {
         if (error) {
@@ -24,11 +24,16 @@ const generarJWT = (id) => {
 
 const comprobarJWT = (token = '') => {
   try {
-    const { id } = jwt.verify(token, process.env.SECRET_JWT_SEED)
-
-    return [true, id]
+    const user = jwt.verify(token, process.env.JWT_SECRET)
+    return user
   } catch (error) {
-    return [false, null]
+    if (error.name == 'TokenExpiredError') {
+      console.error(`Token is expired: ${token}`)
+      throw new Error('Your token is expired')
+    } else {
+      console.error(`Not authorized for this resource, Token: ${token}`)
+      throw new Error('You are not authorized for this resource')
+    }
   }
 }
 

@@ -47,7 +47,7 @@ module.exports = {
         })
 
         // generate token
-        const token = await generarJWT(newUser.id)
+        const token = await generarJWT(newUser)
 
         return {
           user: newUser,

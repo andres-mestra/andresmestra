@@ -1,3 +1,6 @@
+directive @hasRole(roles: [Role]) on OBJECT | FIELD_DEFINITION
+directive @isAuth on OBJECT | FIELD_DEFINITION
+
 type Mutation {
   login(email: String!, password: String!): UserRes
 }

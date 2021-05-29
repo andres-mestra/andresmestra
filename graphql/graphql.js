@@ -2,25 +2,21 @@ const { prisma } = require('../database/config')
 const { makeExecutableSchema } = require('@graphql-tools/schema')
 const typeDefs = require('../graphql/typesDefs')
 const resolvers = require('../graphql/resolvers')
+const { authDirectiveTransformer } = require('../auth/authDirectives')
 
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers,
+  schemaTransforms: [authDirectiveTransformer],
 })
 
 module.exports = {
   schema,
   graphiql: 'playground',
-  playgroundHeaders(window) {
-    return {
-      authorization: `bearer ${window.sessionStorage.getItem('token')}`,
-    }
-  },
   context: (request, reply) => {
     return {
-      //TODO: obtener el usuario del token
-      userId: 1,
       db: prisma,
+      headers: request.headers,
     }
   },
 }
