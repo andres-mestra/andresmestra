@@ -4,7 +4,7 @@ type User {
   email: String!
   jobTitle: String
   slug: String!
-  role: Role! @isAuth
+  role: Role!
   createdAt: String
   posts: [Post!]
 }

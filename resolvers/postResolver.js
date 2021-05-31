@@ -1,3 +1,5 @@
+const { validRole } = require('../auth/authenticated')
+const { SUPER, ADMIN } = require('../helpers/allowedRoles')
 const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
@@ -19,7 +21,7 @@ module.exports = {
     },
   },
   Mutation: {
-    createPost: async (_, { input }, { db, user }, inf) => {
+    createPost: validRole(SUPER)(async (_, { input }, { db, user }, inf) => {
       try {
         let data = { ...input }
         delete data?.authorId
@@ -41,8 +43,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    updatePost: async (_, { id, input }, { db }, inf) => {
+    }),
+    updatePost: validRole(SUPER)(async (_, { id, input }, { db }, inf) => {
       try {
         if (input?.categories) {
           input = { ...input, categories: { set: input.categories } }
@@ -59,8 +61,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    deletePost: async (_, { id }, { db }) => {
+    }),
+    deletePost: validRole(ADMIN)(async (_, { id }, { db }) => {
       try {
         //Returns record erased
         await db.post.delete({ where: { id } })
@@ -69,6 +71,6 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
+    }),
   },
 }

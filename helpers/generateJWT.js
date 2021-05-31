@@ -23,18 +23,20 @@ const generarJWT = ({ id, role, username }) => {
 }
 
 const comprobarJWT = (token = '') => {
-  try {
-    const user = jwt.verify(token, process.env.JWT_SECRET)
-    return user
-  } catch (error) {
-    if (error.name == 'TokenExpiredError') {
-      console.error(`Token is expired: ${token}`)
-      throw new Error('Your token is expired')
-    } else {
-      console.error(`Not authorized for this resource, Token: ${token}`)
-      throw new Error('You are not authorized for this resource')
+  return new Promise((resolve, reject) => {
+    try {
+      const user = jwt.verify(token, process.env.JWT_SECRET)
+      resolve(user)
+    } catch (error) {
+      if (error.name == 'TokenExpiredError') {
+        console.error(`Token is expired: ${token}`)
+        reject('Your token is expired')
+      } else {
+        console.error(`Not authorized for this resource, Token: ${token}`)
+        reject('You are not authorized for this resource')
+      }
     }
-  }
+  })
 }
 
 module.exports = {

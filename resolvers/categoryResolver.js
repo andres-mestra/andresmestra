@@ -1,3 +1,5 @@
+const { validRole } = require('../auth/authenticated')
+const { SUPER, ADMIN } = require('../helpers/allowedRoles')
 const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
@@ -33,7 +35,7 @@ module.exports = {
     },
   },
   Mutation: {
-    createCategory: async (_, { input }, { db }) => {
+    createCategory: validRole(SUPER)(async (_, { input }, { db }) => {
       try {
         // Create Category
         const newCategory = await db.category.create({
@@ -45,8 +47,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    updateCategory: async (_, { id, input }, { db }, inf) => {
+    }),
+    updateCategory: validRole(ADMIN)(async (_, { id, input }, { db }, inf) => {
       try {
         const category = await db.category.update({
           where: { id },
@@ -59,8 +61,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    deleteCategory: async (_, { id }, { db }) => {
+    }),
+    deleteCategory: validRole(ADMIN)(async (_, { id }, { db }) => {
       try {
         //returns record erased
         await db.category.delete({ where: { id } })
@@ -70,8 +72,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    upsertCategory: async (_, { input }, { db }) => {
+    }),
+    upsertCategory: validRole(SUPER)(async (_, { input }, { db }) => {
       const { name } = input
       try {
         const category = await db.category.upsert({
@@ -85,6 +87,6 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
+    }),
   },
 }

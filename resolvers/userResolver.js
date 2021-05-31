@@ -1,4 +1,6 @@
 const argon2d = require('argon2')
+const { validRole } = require('../auth/authenticated')
+const { ADMIN } = require('../helpers/allowedRoles')
 const { generarJWT } = require('../helpers/generateJWT')
 const selectNodes = require('../helpers/selectNodes')
 
@@ -58,7 +60,7 @@ module.exports = {
         throw error
       }
     },
-    updateUser: async (_, { id, input }, { db }, inf) => {
+    updateUser: validRole(ADMIN)(async (_, { id, input }, { db }, inf) => {
       try {
         if (input?.password) {
           //hash password
@@ -77,8 +79,8 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
-    deleteUser: async (_, { id }, { db }) => {
+    }),
+    deleteUser: validRole(ADMIN)(async (_, { id }, { db }) => {
       try {
         //returns record erased
         await db.user.delete({ where: { id } })
@@ -88,6 +90,6 @@ module.exports = {
         console.error(error)
         throw error
       }
-    },
+    }),
   },
 }
