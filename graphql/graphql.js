@@ -17,4 +17,5 @@ module.exports = {
       headers: request.headers,
     }
   },
+  queryDepth: 4,
 }
