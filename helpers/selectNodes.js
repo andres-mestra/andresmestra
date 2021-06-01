@@ -1,13 +1,17 @@
 const selectNodes = (inf) => {
   const { fieldNodes } = inf
   const { selections } = fieldNodes[0].selectionSet
+  // get variables of query
+  const { variableValues } = inf
 
-  const nodes = getNodes(selections)
+  const nodes = getNodes(selections, variableValues)
 
-  return nodes
+  return variableValues.paginate
+    ? { ...nodes, ...variableValues.paginate }
+    : nodes
 }
 
-const getNodes = (selections) => {
+const getNodes = (selections, variableValues = {}) => {
   let select = []
   let nodes = [...selections]
 
@@ -19,6 +23,11 @@ const getNodes = (selections) => {
       select[value] = true
     } else {
       select[value] = getNodes(node.selectionSet?.selections)
+
+      //get variables of paginate field
+      select[value] = variableValues[`pag${value}`]
+        ? { ...select[value], ...variableValues[`pag${value}`] }
+        : select[value]
     }
   })
 

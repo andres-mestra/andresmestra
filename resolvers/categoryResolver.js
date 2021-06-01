@@ -30,6 +30,7 @@ module.exports = {
       const categories = await db.category.findMany({
         ...selectNodes(inf),
       })
+      //const categories = await db.category.findMany()
 
       return categories
     },

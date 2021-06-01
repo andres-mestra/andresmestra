@@ -2,7 +2,7 @@ type Category {
   id: Int!
   name: String!
   slug: String!
-  posts: [Post]
+  posts(pagposts: simplePagInput): [Post]
 }
 
 input CategoryFindInput {
@@ -12,7 +12,7 @@ input CategoryFindInput {
 
 type Query {
   findCategory(where: CategoryFindInput!): Category
-  allCategories: [Category]
+  allCategories(paginate: principalPagInput): [Category]
 }
 
 input CategoryInput {

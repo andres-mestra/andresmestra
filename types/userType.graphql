@@ -6,7 +6,7 @@ type User {
   slug: String!
   role: Role!
   createdAt: String
-  posts: [Post!]
+  posts(pagposts: simplePagInput): [Post!]
 }
 
 enum Role {
@@ -22,7 +22,7 @@ input UserFindInput {
 
 type Query {
   findUser(where: UserFindInput!): User
-  allUsers: [User]
+  allUsers(paginate: principalPagInput): [User]
 }
 
 type UserRes {

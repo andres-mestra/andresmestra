@@ -8,12 +8,12 @@ type Post {
   updatedAt: String
   published: Boolean
   slug: String!
-  categories: [Category!]
+  categories(pagcategories: simplePagInput): [Category!]
 }
 
 type Query {
   findPost(id: Int!): Post
-  allPosts: [Post]
+  allPosts(paginate: principalPagInput): [Post]
 }
 
 input PostSetCategoriesInput {

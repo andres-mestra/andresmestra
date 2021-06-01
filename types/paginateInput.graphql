@@ -1,0 +1,25 @@
+input principalPagInput {
+  take: Int
+  cursor: cursorInput
+  orderBy: orderByInput
+}
+
+input cursorInput {
+  id: Int
+}
+
+input simplePagInput {
+  take: Int
+  orderBy: orderByInput
+}
+
+input orderByInput {
+  id: Order
+  createdAt: Order
+  updatedAt: Order
+}
+
+enum Order {
+  asc
+  desc
+}
