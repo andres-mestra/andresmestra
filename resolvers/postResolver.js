@@ -4,9 +4,18 @@ const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
   Query: {
-    findPost: async (_, { id }, { db }, inf) => {
-      const post = await db.post.findUnique({
-        where: { id },
+    findPost: async (_, { id, slug }, { db }, inf) => {
+      const post = await db.post.findFirst({
+        where: {
+          OR: [
+            {
+              id,
+            },
+            {
+              slug,
+            },
+          ],
+        },
         ...selectNodes(inf),
       })
 

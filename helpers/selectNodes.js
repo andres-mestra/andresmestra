@@ -19,9 +19,9 @@ const getNodes = (selections, variableValues = {}) => {
     const node = nodes.pop()
     const { value } = node.name
 
-    if (!node.selectionSet) {
+    if (!node.selectionSet && value !== '__typename') {
       select[value] = true
-    } else {
+    } else if (node.selectionSet?.selections.length > 0) {
       select[value] = getNodes(node.selectionSet?.selections)
 
       //get variables of paginate field

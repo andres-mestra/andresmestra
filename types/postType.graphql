@@ -12,7 +12,7 @@ type Post {
 }
 
 type Query {
-  findPost(id: Int!): Post
+  findPost(id: Int, slug: String): Post
   allPosts(paginate: principalPagInput): [Post]
 }
 

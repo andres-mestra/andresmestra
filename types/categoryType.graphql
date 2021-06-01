@@ -7,7 +7,8 @@ type Category {
 
 input CategoryFindInput {
   id: Int
-  name: Int
+  name: String
+  slug: String
 }
 
 type Query {

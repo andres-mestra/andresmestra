@@ -13,7 +13,7 @@ module.exports = {
                 id: where?.id,
               },
               {
-                email: where?.name,
+                name: where?.name,
               },
             ],
           },
