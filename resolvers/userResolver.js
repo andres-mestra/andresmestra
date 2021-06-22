@@ -1,11 +1,27 @@
 const argon2d = require('argon2')
-const { validRole } = require('../auth/authenticated')
-const { ADMIN } = require('../helpers/allowedRoles')
+const { validRole, isAuth } = require('../auth/authenticated')
+const { ADMIN, SUPER } = require('../helpers/allowedRoles')
 const { generarJWT } = require('../helpers/generateJWT')
 const selectNodes = require('../helpers/selectNodes')
 
 module.exports = {
   Query: {
+    me: isAuth(async (_, args, { db, user }) => {
+      try {
+        const currentUser = await db.user.findUnique({
+          where: { id: user.id },
+        })
+
+        if (SUPER.includes(currentUser.role)) {
+          return currentUser
+        }
+
+        return null
+      } catch (error) {
+        console.log(error)
+        return null
+      }
+    }),
     findUser: async (_, { where }, { db }, inf) => {
       try {
         const user = await db.user.findFirst({

@@ -1,5 +1,6 @@
 const Fastify = require('fastify')
 const mercurius = require('mercurius')
+const CORS = require('fastify-cors')
 const { dbConection } = require('../database/config')
 const graphql = require('../graphql/graphql')
 
@@ -13,6 +14,10 @@ class Server {
 
   register() {
     // prettier-ignore
+    this.app.register(CORS, {
+      origin: ['http://localhost:3001', /\:localhost\:3001$/],
+      methods: ['GET','POST']
+    })
     this.app.register(mercurius, graphql)
   }
 

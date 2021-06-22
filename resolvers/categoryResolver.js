@@ -15,6 +15,9 @@ module.exports = {
               {
                 name: where?.name,
               },
+              {
+                slug: where?.slug,
+              },
             ],
           },
           ...selectNodes(inf),

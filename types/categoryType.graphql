@@ -12,7 +12,7 @@ input CategoryFindInput {
 }
 
 type Query {
-  findCategory(where: CategoryFindInput!): Category
+  findCategory(where: CategoryFindInput): Category
   allCategories(paginate: principalPagInput): [Category]
 }
 
