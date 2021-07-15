@@ -3,6 +3,11 @@ type Category {
   name: String!
   slug: String!
   posts(pagposts: simplePagInput): [Post]
+  _count: Count
+}
+
+type Count {
+  posts: Int
 }
 
 input CategoryFindInput {

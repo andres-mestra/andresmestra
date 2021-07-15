@@ -1,7 +1,18 @@
 input principalPagInput {
+  where: whereInput
   take: Int
+  skip: Int
   cursor: cursorInput
   orderBy: orderByInput
+}
+
+input whereInput {
+  id: Int
+  authorId: Int
+  name: String
+  slug: String
+  title: String
+  published: Boolean
 }
 
 input cursorInput {
