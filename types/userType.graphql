@@ -2,6 +2,7 @@ type User {
   id: Int!
   username: String!
   email: String!
+  avatar: String
   jobTitle: String
   slug: String!
   role: Role!
