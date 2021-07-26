@@ -77,16 +77,28 @@ module.exports = {
         throw error
       }
     }),
-    upsertCategory: validRole(SUPER)(async (_, { input }, { db }) => {
+    insertCategory: validRole(SUPER)(async (_, { input }, { db }) => {
       const { name } = input
       try {
-        const category = await db.category.upsert({
+        const category = await db.category.findFirst({
           where: { name },
-          update: { ...input },
-          create: { ...input },
         })
 
-        return category
+        if (category?.id) {
+          return {
+            category,
+            insert: false,
+          }
+        }
+
+        const newCategory = await db.category.create({
+          data: { ...input },
+        })
+
+        return {
+          category: newCategory,
+          insert: true,
+        }
       } catch (error) {
         console.error(error)
         throw error

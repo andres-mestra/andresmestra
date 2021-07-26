@@ -10,6 +10,11 @@ type Count {
   posts: Int
 }
 
+type UpsertCategory {
+  category: Category
+  insert: Boolean!
+}
+
 input CategoryFindInput {
   id: Int
   name: String
@@ -35,5 +40,5 @@ type Mutation {
   createCategory(input: CategoryInput!): Category
   updateCategory(id: Int!, input: CategoryUpdateInput!): Category
   deleteCategory(id: Int!): Boolean
-  upsertCategory(input: CategoryInput!): Category
+  insertCategory(input: CategoryInput!): UpsertCategory
 }

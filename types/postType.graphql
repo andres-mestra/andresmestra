@@ -9,6 +9,7 @@ type Post {
   updatedAt: String
   published: Boolean
   slug: String!
+  description: String
   categories(pagcategories: simplePagInput): [Category!]
 }
 

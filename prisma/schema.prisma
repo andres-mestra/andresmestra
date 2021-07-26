@@ -22,17 +22,18 @@ model User {
 }
 
 model Post {
-  id         Int        @id @default(autoincrement())
-  title      String     @db.VarChar(255)
-  html       String?
-  markdown   String?
-  authorId   Int?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  published  Boolean    @default(false)
-  slug       String     @unique
-  author     User?      @relation(fields: [authorId], references: [id])
-  categories Category[]
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(255)
+  html        String?
+  markdown    String?
+  authorId    Int?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  published   Boolean    @default(false)
+  slug        String     @unique
+  description String?
+  author      User?      @relation(fields: [authorId], references: [id])
+  categories  Category[]
 }
 
 model Category {
